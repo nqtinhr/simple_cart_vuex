@@ -2,6 +2,16 @@ apiVersion: v1
 entries:
   cart-chart:
   - apiVersion: v2
+    appVersion: 4.0.0
+    created: "2024-06-13T13:41:06.576469505Z"
+    description: A Helm chart for Kubernetes
+    digest: 2f76c620186dc94a7f4dde063d214a74319daa7ed5a9d1b021611b2dc156ae55
+    name: cart-chart
+    type: application
+    urls:
+    - https://github.com/nqtinhr/simple_cart_vuex/releases/download/cart-chart-0.4.0/cart-chart-0.4.0.tgz
+    version: 0.4.0
+  - apiVersion: v2
     appVersion: 3.0.0
     created: "2024-06-13T13:40:42.189312208Z"
     description: A Helm chart for Kubernetes
@@ -31,4 +41,4 @@ entries:
     urls:
     - https://github.com/nqtinhr/simple_cart_vuex/releases/download/cart-chart-0.1.0/cart-chart-0.1.0.tgz
     version: 0.1.0
-generated: "2024-06-13T13:40:42.189325303Z"
+generated: "2024-06-13T13:41:06.576487449Z"
