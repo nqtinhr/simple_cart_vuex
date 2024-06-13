@@ -1,0 +1,12 @@
+version: "3.9"
+services:
+  nginx:
+    container_name: cart_simple
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 80:80
+    volumes:
+      - ./config/default.conf:/etc/nginx/conf.d/default.conf

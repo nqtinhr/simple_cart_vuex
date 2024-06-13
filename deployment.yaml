@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cart-simple
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cart-simple
+  template:
+    metadata:
+      labels:
+        app: cart-simple
+    spec:
+      volumes:
+        - name: nginx-config
+        - name: nginx-certs
+          secret:
+            secretName: "simple-cart-vue-cert" 
+      containers:
+      - name: cart-nginx
+        image: 050313612080.dkr.ecr.ap-southeast-1.amazonaws.com/simple-cart-vuex:latest
+        imagePullPolicy: "Always"
+        resources: {}
+        ports:
+          - containerPort: 80
+        volumeMounts:
+          - name: nginx-config
+            mountPath: "/config/default.conf"
+          - name: nginx-certs
+            mountPath: "/certs"
+      imagePullSecrets:
+      - name: ecr-secret
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      targetPort: 80
+      name: http
+      protocol: TCP
+      nodePort: 31080
+    - port: 443
+      targetPort: 443
+      name: https
+      protocol: TCP
+      nodePort: 31443
+  # Label của POD tại Deployment
+  selector:
+    app: cart-simple
+
+
+# openssl req -nodes -newkey rsa:2048 -keyout tls.key  -out ca.csr -subj "/CN=cart-simple"
+# openssl x509 -req -sha256 -days 365 -in ca.csr -signkey tls.key -out tls.crt
+# kubectl create secret tls simple-cart-vue-cert --cert=certs/tls.crt  --key=certs/tls.key
+
